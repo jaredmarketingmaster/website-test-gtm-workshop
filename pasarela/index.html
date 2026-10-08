@@ -3,4 +3,17 @@
     <script>const isPropia = (new URLSearchParams(window.location.search).get('tipo') !== 'externa'); if (isPropia) { window.dataLayer=window.dataLayer||[];window.dataLayer.push({page_type:'pasarela'}); document.write('<script src="../assets/js/datalayer.js"><\/script><script src="../assets/js/gtm-loader.js"><\/script>'); } else { document.documentElement.style.background='#eee'; }</script>
     <link rel="stylesheet" href="../assets/css/styles.css"></head>
 <body><div class="container" style="text-align:center; padding-top:50px; background:#fff; border-radius:8px; max-width:500px;"><h2>Procesando Pago</h2><a href="#" id="btn-procesar" class="btn-primario">Aprobar Transacción simulada</a></div>
-    <script>document.getElementById('btn-procesar').addEventListener('click', (e) => { e.preventDefault(); const dom1 = window.AppConfig.dominios.principal, dom2 = window.AppConfig.dominios.checkout; let url = '../gracias-compra/index.html'; if (dom2 && dom2 !== '') url = `http${dom1.includes('localhost')?'':'s'}://${dom1}/gracias-compra/index.html`; window.location.href = url; });</script></body></html>
+    <script>
+        // El regreso al dominio A es un enlace <a> con href real, no una navegación por JavaScript:
+        // el vinculador entre dominios de GA4 solo decora enlaces y formularios, así que con window.location el _gl no viajaría.
+        document.addEventListener('DOMContentLoaded', () => {
+            const dominios = window.AppConfig.dominios;
+            let url = '../gracias-compra/index.html';
+            if (dominios.checkout_url) {
+                // Estamos en el dominio B: hay que volver a la URL base del dominio A, donde está el carrito.
+                if (dominios.principal_url) url = dominios.principal_url.replace(/\/?$/, '/') + 'gracias-compra/index.html';
+                else console.warn('Café Laboratorio: checkout_url está configurado pero principal_url está vacío en config.js. Completalo para volver al dominio principal; mientras tanto el regreso usa la ruta relativa.');
+            }
+            document.getElementById('btn-procesar').href = url;
+        });
+    </script></body></html>

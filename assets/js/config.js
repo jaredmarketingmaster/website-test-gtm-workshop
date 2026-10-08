@@ -6,7 +6,13 @@ window.AppConfig = {
     whatsapp_link: 'https://wa.me/5491100000000', email: 'hola@example.com'
   },
   dominios: {
-    principal: window.location.hostname, checkout: '',
+    // Base del dominio A (el sitio principal, donde se guarda el carrito y se dispara el purchase).
+    // URL absoluta, con barra final y con la subruta si la hay (GitHub Pages publica en /<repo>/).
+    // Antes se usaba window.location.hostname, que en la pasarela vale el dominio B: por eso la compra terminaba en B.
+    principal_url: 'https://jaredmarketingmaster.github.io/website-test-gtm-workshop/',
+    // Base del dominio B (el checkout/pasarela). VACÍO = misma URL que el principal (clases 1, 2 y 4).
+    // Jared lo completa antes de la clase 3, con el sitio ya publicado en un segundo dominio.
+    checkout_url: '',
     gtm_whitelist: ['https://www.googletagmanager.com']
   },
   productos: [
