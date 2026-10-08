@@ -13,5 +13,21 @@
                  (fuente de sistema de los controles y line-height normal) para que se vea igual que antes. -->
             <div style="margin-bottom:15px;"><a href="./assets/files/catalogo-cafe-laboratorio.pdf" download class="btn-primario btn-icono" data-track="descarga-catalogo" style="font: -webkit-small-control; font-size: 16px; line-height: normal;"><svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 2a.5.5 0 0 1 .5.5v5h3a.5.5 0 0 1 .354.854l-4 4a.5.5 0 0 1-.708 0l-4-4A.5.5 0 0 1 3.5 7.5h3v-5A.5.5 0 0 1 8 2z"/></svg> Descargar Catálogo PDF</a></div>
             <div style="margin-bottom:15px;"><a href="https://example.com" target="_blank" rel="noopener">Ir a sitio externo (example.com)</a></div>
+        </div>
+        <div style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid var(--color-borde); margin-top: 30px;">
+            <h2>Más páginas de práctica</h2>
+            <ul style="margin: 0 0 20px 20px;">
+                <li><a href="./guia-de-cafe/index.html">Guía de café</a></li>
+                <li><a href="./app/index.html">Mini app</a></li>
+                <li><a href="./buscar/index.html?q=cafe">Búsqueda de ejemplo: «cafe»</a></li>
+            </ul>
+            <!-- name="q" es el parámetro de búsqueda que reconoce la medición mejorada de GA4.
+                 El botón no usa la clase btn-primario a propósito: así no suma coincidencias a los activadores
+                 de clic por clase de los ejercicios ni lo modifica el rediseño v2. -->
+            <form action="./buscar/index.html" method="GET">
+                <label for="buscar-q">Buscar en el sitio</label>
+                <input type="text" id="buscar-q" name="q" placeholder="Ej: espresso" style="margin-bottom:10px;">
+                <button type="submit" style="background-color: var(--color-primario); color: #fff; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">Buscar</button>
+            </form>
         </div></main>
     <script src="./assets/js/ui.js"></script><script src="./assets/js/panel.js"></script></body></html>
