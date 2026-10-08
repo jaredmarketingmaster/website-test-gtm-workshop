@@ -8,6 +8,20 @@
 </head>
 <body>
     <h1>404 - Página no encontrada</h1>
-    <a href="./index.html">Volver al inicio</a>
+    <a id="volver-inicio" href="./index.html">Volver al inicio</a>
+    <script>
+        // La 404 se muestra en cualquier ruta inexistente, así que un enlace relativo falla en subcarpetas
+        // (en /a/b, «./index.html» apunta a /a/index.html). Se calcula la raíz del sitio:
+        // en GitHub Pages el sitio vive en /<repo>/ (primer segmento de la ruta); en cualquier otro host, en /.
+        // Sin GTM a propósito: esta página no carga ningún script del sitio.
+        (function () {
+            var base = '/';
+            if (location.hostname.endsWith('.github.io')) {
+                var primerSegmento = location.pathname.split('/').filter(Boolean)[0];
+                if (primerSegmento) base = '/' + primerSegmento + '/';
+            }
+            document.getElementById('volver-inicio').href = base;
+        })();
+    </script>
 </body>
 </html>
