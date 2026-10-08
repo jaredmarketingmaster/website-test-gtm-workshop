@@ -6,6 +6,19 @@
         <div style="background:#fff;padding:20px;border-radius:8px;margin-bottom:20px;"><h2>Formulario Clásico</h2><form action="../gracias-contacto/index.html" method="GET"><input type="hidden" name="form_id" value="contacto_clasico"><input type="text" required placeholder="Nombre Ficticio" style="margin-bottom:10px;"><button type="submit" class="btn-primario">Enviar</button></form></div>
         <div style="background:#fff;padding:20px;border-radius:8px;margin-bottom:20px;"><h2>Formulario AJAX (Data Layer)</h2><form id="form-ajax-dl"><input type="text" required placeholder="Empresa" style="margin-bottom:10px;"><button type="submit" class="btn-primario">Solicitar Presupuesto</button></form><div id="msg-ajax" style="display:none; color:green; margin-top:10px;">Enviado ok.</div></div>
         <div style="background:#fff;padding:20px;border-radius:8px;"><h2>Agenda (Iframe)</h2><iframe src="../agenda-widget/index.html" style="width:100%; height:200px; border:1px solid #ccc;"></iframe></div>
+        <div style="background:#fff;padding:20px;border-radius:8px;margin-top:20px;"><h2>Otros medios</h2>
+            <p>Teléfono: <a id="link-tel" href="#" data-track="llamar">-</a></p>
+            <p>Email: <a id="link-email" href="#" data-track="email">-</a></p>
+        </div>
+        <script>
+            // Teléfono y email salen de config.js (un solo lugar para cambiarlos). El script corre mientras se lee
+            // la página, así que los enlaces ya tienen su href real al cargar.
+            (function () {
+                const tienda = window.AppConfig.tienda, tel = document.getElementById('link-tel'), email = document.getElementById('link-email');
+                tel.href = tienda.telefono_link; tel.textContent = tienda.telefono_mostrar;
+                email.href = 'mailto:' + tienda.email; email.textContent = tienda.email;
+            })();
+        </script>
     </main>
     <script src="../assets/js/ui.js"></script><script src="../assets/js/panel.js"></script>
     <script>document.getElementById('form-ajax-dl').addEventListener('submit', (e) => { e.preventDefault(); document.getElementById('msg-ajax').style.display='block'; window.AppTracking.formSuccess('presupuesto', 'Pedí tu presupuesto', 'presupuesto'); });</script></body></html>
