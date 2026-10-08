@@ -13,11 +13,17 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => { const datos = window.AppCarrito.obtener(); if (datos.items.length === 0) return window.location.href = '../productos/index.html'; window.AppTracking.beginCheckout(datos.currency, datos.value, datos.coupon, datos.items);
             function actualizarEnlace() {
-                const tipo = document.querySelector('input[name="pago_tipo"]:checked').value; const dom1 = window.AppConfig.dominios.principal, dom2 = window.AppConfig.dominios.checkout;
-                let baseURL = (dom2 && dom2 !== dom1 && dom2 !== '') ? `http${dom2.includes('localhost')?'':'s'}://${dom2}/pasarela/index.html` : '../pasarela/index.html';
+                const tipo = document.querySelector('input[name="pago_tipo"]:checked').value;
+                // Con checkout_url definido, la pasarela vive en el dominio B; vacío = ruta relativa (mismo dominio, como siempre).
+                // Se asegura la barra final para que una URL base escrita sin "/" no arme una ruta rota.
+                const checkoutUrl = window.AppConfig.dominios.checkout_url;
+                let baseURL = checkoutUrl ? checkoutUrl.replace(/\/?$/, '/') + 'pasarela/index.html' : '../pasarela/index.html';
                 const url = new URL(baseURL, window.location.href); url.searchParams.set('tipo', tipo);
                 const gtmId = localStorage.getItem('practica_gtm_id'); if (gtmId) url.searchParams.set('gtm', gtmId);
                 const esc = sessionStorage.getItem('practica_escenario'); if (esc) url.searchParams.set('escenario', esc);
+                // El resto de la práctica también viaja, para que el dominio B se comporte igual que el A.
+                const extras = { errores: 'practica_errores_custom', ga4: 'practica_ga4', pixel: 'practica_pixel', consent: 'practica_consent_mode' };
+                Object.keys(extras).forEach(param => { const valor = sessionStorage.getItem(extras[param]); if (valor) url.searchParams.set(param, valor); });
                 url.searchParams.set('d', encodeURIComponent(btoa(JSON.stringify({curr: datos.currency, val: datos.value, items: datos.items.length}))));
                 document.getElementById('link-finalizar').href = url.toString();
             }

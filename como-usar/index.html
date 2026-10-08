@@ -4,6 +4,13 @@
 <body><header class="site-header"><a href="../index.html" class="logo">Café Laboratorio</a></header>
     <main class="container"><h1>Cómo usar este sitio</h1>
         <div style="background:#fff;padding:20px;border-radius:8px;">
-            <p>Usá tu URL con <code>?gtm=GTM-XXXX</code> en Tag Assistant. Aprovechá el Panel (abajo izquierda) para depurar en vivo. Para testear consent mode y server side (Clase 4), probá <code>?consent=gtag</code> y <code>?gtm_host=...</code>.</p>
+            <p>Usá tu URL con <code>?gtm=GTM-XXXX</code> en Tag Assistant. Aprovechá el Panel (abajo izquierda) para depurar en vivo. Para testear server side (Clase 4), probá <code>?gtm_host=...</code>.</p>
+            <p><strong>Consent Mode (Clase 4).</strong> El banner de cookies aparece solo si entrás con <code>?consent=</code> y uno de estos modos:</p>
+            <ul style="margin: 0 0 15px 20px;">
+                <li><code>?consent=cmp</code>: el sitio <strong>no</strong> envía el estado de consentimiento por defecto (lo configurás vos en GTM). Cuando elegís en el banner, envía el <code>update</code> y después el evento <code>consent_update</code>.</li>
+                <li><code>?consent=gtag</code>: el sitio envía el estado por defecto antes de que cargue GTM y, cuando elegís, el <code>update</code> y el evento <code>consent_update</code>.</li>
+                <li><code>?consent=datalayer</code>: el sitio solo envía el evento <code>consent_update</code>, con tu elección en <code>consent_state</code>.</li>
+            </ul>
+            <p>Con <code>?consent=off</code> se desactiva. El botón «Borrar mi elección» (abajo a la derecha) borra lo que elegiste para que vuelva a aparecer el banner.</p>
         </div></main>
     <script src="../assets/js/ui.js"></script><script src="../assets/js/panel.js"></script></body></html>

@@ -6,9 +6,18 @@ window.AppConfig = {
     whatsapp_link: 'https://wa.me/5491100000000', email: 'hola@example.com'
   },
   dominios: {
-    principal: window.location.hostname, checkout: '',
+    // Base del dominio A (el sitio principal, donde se guarda el carrito y se dispara el purchase).
+    // URL absoluta, con barra final y con la subruta si la hay (GitHub Pages publica en /<repo>/).
+    // Antes se usaba window.location.hostname, que en la pasarela vale el dominio B: por eso la compra terminaba en B.
+    principal_url: 'https://jaredmarketingmaster.github.io/website-test-gtm-workshop/',
+    // Base del dominio B (el checkout/pasarela). VACÍO = misma URL que el principal (clases 1, 2 y 4).
+    // Jared lo completa antes de la clase 3, con el sitio ya publicado en un segundo dominio.
+    checkout_url: '',
     gtm_whitelist: ['https://www.googletagmanager.com']
   },
+  // Nombre del evento que el banner empuja al dataLayer cuando cambia el consentimiento (los tres modos de ?consent=).
+  // Es el que usan los manuales y las diapositivas; si se cambia, actualizar también el texto de /como-usar/.
+  consent: { evento: 'consent_update' },
   productos: [
     { item_id: 'CL-001', item_name: 'Colombia Finca El Paraíso', item_brand: 'Café Laboratorio', item_category: 'Café en grano', precio_centavos: 1850000, imagen_svg: 'icono-cafe-grano' },
     { item_id: 'CL-002', item_name: 'Etiopía Yirgacheffe', item_brand: 'Café Laboratorio', item_category: 'Café en grano', precio_centavos: 2100000, imagen_svg: 'icono-cafe-grano' },
@@ -25,5 +34,11 @@ window.AppConfig = {
     'm7': { errores: ['sin_limpiar_ecommerce', 'transaction_id_repetido'] },
     'r2': { errores: ['ga4_duplicado', 'valor_texto', 'cross_domain_js'] },
     'x9': { errores: ['datalayer_reset'] }
-  }
+  },
+  // Todos los nombres de error que entiende el código, para avisar si ?errores= trae uno mal escrito.
+  // Son 13: los 3 que ya funcionaban sueltos, los 5 que nunca se activaban y los 5 que antes solo venían en los presets.
+  errores_validos: [
+    'ga4_duplicado', 'pixel_duplicado', 'datalayer_reset', 'clave_mayuscula', 'moneda_minuscula', 'push_tardio', 'recarga_gracias', 'snippet_doble',
+    'valor_texto', 'doble_envio', 'sin_limpiar_ecommerce', 'transaction_id_repetido', 'cross_domain_js'
+  ]
 };
