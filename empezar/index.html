@@ -1,0 +1,40 @@
+<!DOCTYPE html><html lang="es-AR"><head><meta charset="UTF-8"><meta name="robots" content="noindex, nofollow"><title>Conectar Contenedor - Café Laboratorio</title>
+    <script src="../assets/js/config.js"></script><link rel="stylesheet" href="../assets/css/styles.css">
+    <style>.box{background:#fff;padding:20px;border-radius:8px;border:1px solid var(--color-borde);margin-bottom:20px;} .error-msg{color:var(--color-alerta);font-size:14px;margin-top:5px;display:none;} textarea{height:150px;font-family:monospace;font-size:12px;}</style></head>
+<body><div class="banner-practica">Sitio de práctica de tracking: no ingreses datos reales</div>
+    <header class="site-header"><div class="logo">Café Laboratorio</div></header>
+    <main class="container"><h1>Conectá tu Google Tag Manager</h1>
+        <div class="box"><h2>Opción 1: Ingreso rápido por ID</h2>
+            <div class="form-group"><input type="text" id="input-id" placeholder="Ej: GTM-ABC1234"><div id="id-error" class="error-msg"></div></div>
+            <button id="btn-guardar-id" class="btn-primario">Guardar y Entrar</button> <button id="btn-olvidar" class="panel-btn">Olvidar contenedor</button>
+            <div style="margin-top: 20px;"><strong>Tu enlace:</strong> <code id="enlace-personal">-</code></div>
+        </div>
+        <div class="box"><h2>Opción 2: Práctica de instalación</h2>
+            <textarea id="input-snippet" placeholder="Pegá acá todo el HTML..."></textarea>
+            <div id="snippet-feedback" class="error-msg" style="display:block; color: #333;"></div>
+            <button id="btn-analizar" class="btn-primario" style="margin-top: 10px;">Analizar Código</button>
+        </div></main>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputId = document.getElementById('input-id'), idError = document.getElementById('id-error'), enlacePersonal = document.getElementById('enlace-personal');
+            const gtmIdGuardado = localStorage.getItem('practica_gtm_id'); if (gtmIdGuardado) { inputId.value = gtmIdGuardado; actualizarEnlace(gtmIdGuardado); }
+            function actualizarEnlace(id) { const url = new URL(window.location.origin + window.location.pathname.replace('/empezar/', '/')); url.searchParams.set('gtm', id); enlacePersonal.textContent = url.toString(); }
+            function validarYGuardar(id) {
+                id = id.trim().toUpperCase(); idError.style.display = 'block';
+                if (!id) { idError.textContent = 'Ingresá un ID.'; return false; }
+                if (!/^GTM-[A-Z0-9]{4,12}$/.test(id)) { idError.textContent = 'Formato inválido. Debe ser GTM-XXXX'; return false; }
+                idError.style.color = 'green'; idError.textContent = 'ID válido. Guardando...'; localStorage.setItem('practica_gtm_id', id); actualizarEnlace(id);
+                setTimeout(() => { window.location.href = sessionStorage.getItem('practica_redirect') || '../index.html'; sessionStorage.removeItem('practica_redirect'); }, 800); return true;
+            }
+            document.getElementById('btn-guardar-id').addEventListener('click', () => validarYGuardar(inputId.value));
+            document.getElementById('btn-olvidar').addEventListener('click', () => { localStorage.removeItem('practica_gtm_id'); inputId.value = ''; enlacePersonal.textContent = '-'; });
+            document.getElementById('btn-analizar').addEventListener('click', () => {
+                const text = document.getElementById('input-snippet').value, feedback = document.getElementById('snippet-feedback'); feedback.style.color = 'red';
+                const headMatches = [...text.matchAll(/googletagmanager\.com\/gtm\.js\?id=(GTM-[A-Z0-9]+)/gi)];
+                const bodyMatches = [...text.matchAll(/googletagmanager\.com\/ns\.html\?id=(GTM-[A-Z0-9]+)/gi)];
+                if (!headMatches.length && !bodyMatches.length) { feedback.textContent = '❌ No encontré ningún código de GTM.'; return; }
+                const idHead = headMatches.length ? headMatches[0][1].toUpperCase() : null;
+                feedback.style.color = 'green'; feedback.textContent = `✅ ID encontrado: ${idHead}. Entrando...`; validarYGuardar(idHead);
+            });
+        });
+    </script></body></html>

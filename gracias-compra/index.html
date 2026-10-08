@@ -1,0 +1,15 @@
+<!DOCTYPE html><html lang="es-AR"><head><meta charset="UTF-8"><meta name="robots" content="noindex, nofollow"><title>Gracias por tu compra - Café Laboratorio</title>
+    <script src="../assets/js/config.js"></script><script src="../assets/js/escenarios.js"></script><script src="../assets/js/consent.js"></script>
+    <script>window.dataLayer=window.dataLayer||[];window.dataLayer.push({page_type:'gracias_compra'});</script><script src="../assets/js/datalayer.js"></script><script src="../assets/js/carrito.js"></script><script src="../assets/js/gtm-loader.js"></script><link rel="stylesheet" href="../assets/css/styles.css"></head>
+<body><header class="site-header"><a href="../index.html" class="logo">Café Laboratorio</a></header>
+    <main class="container" style="text-align:center;"><h1>¡Gracias por tu compra!</h1><p id="tx-id" style="font-weight:bold;"></p></main>
+    <script src="../assets/js/ui.js"></script><script src="../assets/js/panel.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const datos = window.AppCarrito.obtener(), roto = window.AppTracking.errores().includes('recarga_gracias');
+            if (datos.items.length === 0 && !roto) return document.querySelector('h1').textContent = "No hay pedidos pendientes";
+            const txId = `CL-${Math.random().toString(36).substring(2, 8).toUpperCase()}`; document.getElementById('tx-id').textContent = txId;
+            if (datos.items.length > 0) window.AppTracking.purchase(txId, datos.currency, datos.value, datos.tax, datos.shipping, datos.coupon, datos.items);
+            if (!roto) window.AppCarrito.vaciar();
+        });
+    </script></body></html>

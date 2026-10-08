@@ -1,0 +1,19 @@
+<!DOCTYPE html><html lang="es-AR"><head><meta charset="UTF-8"><meta name="robots" content="noindex, nofollow"><title>Productos - Café Laboratorio</title>
+    <script src="../assets/js/config.js"></script><script src="../assets/js/escenarios.js"></script><script src="../assets/js/consent.js"></script>
+    <script>window.dataLayer=window.dataLayer||[];window.dataLayer.push({page_type:'listado'});</script><script src="../assets/js/datalayer.js"></script><script src="../assets/js/carrito.js"></script><script src="../assets/js/gtm-loader.js"></script><link rel="stylesheet" href="../assets/css/styles.css">
+    <style>.grid-productos { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; } .card-producto { background: #fff; border: 1px solid var(--color-borde); border-radius: 8px; padding: 20px; text-align: center; cursor: pointer; text-decoration: none; color: inherit; display: block; }</style></head>
+<body><header class="site-header"><a href="../index.html" class="logo">Café Laboratorio</a><nav class="main-nav"><a href="../carrito/index.html" style="color:var(--color-primario);">Carrito (<span id="cart-count">0</span>)</a></nav></header>
+    <main class="container"><h1>Nuestro Catálogo</h1><div class="grid-productos" id="contenedor-productos"></div></main>
+    <script src="../assets/js/ui.js"></script><script src="../assets/js/panel.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => { window.AppCarrito.actualizarContadorUI(); const cont = document.getElementById('contenedor-productos'); const itemsGA4 = [];
+            window.AppConfig.productos.forEach((prod, idx) => {
+                const item = document.createElement('a'); item.href = `../producto/index.html?id=${prod.item_id}`; item.className = 'card-producto';
+                item.innerHTML = `<div style="font-size:12px;color:#666;">${prod.item_category}</div><h3>${prod.item_name}</h3><div style="font-size:18px;font-weight:bold;color:var(--color-primario);">${window.AppCarrito.formatearMoneda(prod.precio_centavos/100)}</div>`;
+                cont.appendChild(item);
+                const ga4Item = { item_id: prod.item_id, item_name: prod.item_name, item_brand: prod.item_brand, item_category: prod.item_category, price: prod.precio_centavos/100, index: idx + 1 }; itemsGA4.push(ga4Item);
+                item.addEventListener('click', () => window.AppTracking.selectItem([ga4Item], 'L-001', 'Catálogo General'));
+            });
+            window.AppTracking.viewItemList(itemsGA4, 'L-001', 'Catálogo General');
+        });
+    </script></body></html>

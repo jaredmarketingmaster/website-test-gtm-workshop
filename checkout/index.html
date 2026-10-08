@@ -1,0 +1,28 @@
+<!DOCTYPE html><html lang="es-AR"><head><meta charset="UTF-8"><meta name="robots" content="noindex, nofollow"><title>Checkout - Café Laboratorio</title>
+    <script src="../assets/js/config.js"></script><script src="../assets/js/escenarios.js"></script><script src="../assets/js/consent.js"></script>
+    <script>window.dataLayer=window.dataLayer||[];window.dataLayer.push({page_type:'checkout'});</script><script src="../assets/js/datalayer.js"></script><script src="../assets/js/carrito.js"></script><script src="../assets/js/gtm-loader.js"></script><link rel="stylesheet" href="../assets/css/styles.css"></head>
+<body><header class="site-header"><a href="../index.html" class="logo">Café Laboratorio</a></header>
+    <main class="container"><h1>Finalizar Compra</h1>
+        <div style="background:#fff;padding:20px;border-radius:8px;">
+            <h3>Paso de Pago (Cross-Domain Test)</h3>
+            <label><input type="radio" name="pago_tipo" value="propia" checked> Pasarela Propia (Carga GTM)</label><br>
+            <label><input type="radio" name="pago_tipo" value="externa"> Pasarela Externa (Terceros)</label><br><br>
+            <a id="link-finalizar" class="btn-primario" href="#">Ir a Pagar</a> <button id="btn-error-js" class="btn-primario" style="display:none;">Ir a pagar (JS)</button>
+        </div></main>
+    <script src="../assets/js/ui.js"></script><script src="../assets/js/panel.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => { const datos = window.AppCarrito.obtener(); if (datos.items.length === 0) return window.location.href = '../productos/index.html'; window.AppTracking.beginCheckout(datos.currency, datos.value, datos.coupon, datos.items);
+            function actualizarEnlace() {
+                const tipo = document.querySelector('input[name="pago_tipo"]:checked').value; const dom1 = window.AppConfig.dominios.principal, dom2 = window.AppConfig.dominios.checkout;
+                let baseURL = (dom2 && dom2 !== dom1 && dom2 !== '') ? `http${dom2.includes('localhost')?'':'s'}://${dom2}/pasarela/index.html` : '../pasarela/index.html';
+                const url = new URL(baseURL, window.location.href); url.searchParams.set('tipo', tipo);
+                const gtmId = localStorage.getItem('practica_gtm_id'); if (gtmId) url.searchParams.set('gtm', gtmId);
+                const esc = sessionStorage.getItem('practica_escenario'); if (esc) url.searchParams.set('escenario', esc);
+                url.searchParams.set('d', encodeURIComponent(btoa(JSON.stringify({curr: datos.currency, val: datos.value, items: datos.items.length}))));
+                document.getElementById('link-finalizar').href = url.toString();
+            }
+            document.querySelectorAll('input[name="pago_tipo"]').forEach(r => r.addEventListener('change', actualizarEnlace)); actualizarEnlace();
+            document.getElementById('link-finalizar').addEventListener('click', () => { window.AppTracking.addPaymentInfo(datos.currency, datos.value, datos.coupon, document.querySelector('input[name="pago_tipo"]:checked').value, datos.items); });
+            if (window.AppTracking.errores().includes('cross_domain_js')) { document.getElementById('link-finalizar').style.display='none'; document.getElementById('btn-error-js').style.display='inline-block'; document.getElementById('btn-error-js').addEventListener('click', () => { window.AppTracking.addPaymentInfo(datos.currency, datos.value, datos.coupon, document.querySelector('input[name="pago_tipo"]:checked').value, datos.items); setTimeout(() => window.location.href = document.getElementById('link-finalizar').href, 200); }); }
+        });
+    </script></body></html>
