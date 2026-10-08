@@ -6,6 +6,10 @@ window.AppTracking = (function() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) { var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8); return v.toString(16); });
     }
     function getErroresActivos() {
+        // Misma fuente que escenarios.js (preset + ?errores=): así cualquier error se puede activar suelto.
+        // Antes solo se leía el preset y varios errores programados nunca se activaban.
+        if (window.AppEscenarios && typeof window.AppEscenarios.getErrores === 'function') return window.AppEscenarios.getErrores();
+        // Respaldo por si una página carga datalayer.js sin escenarios.js: solo el preset, como antes.
         const escenario = sessionStorage.getItem('practica_escenario');
         if (!escenario || !window.AppConfig.escenarios_presets[escenario]) return [];
         return window.AppConfig.escenarios_presets[escenario].errores;

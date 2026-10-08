@@ -17,7 +17,10 @@
     if (!gtmId) return;
     window.dataLayer = window.dataLayer || [];
     const escenario = sessionStorage.getItem('practica_escenario');
-    const isDoubleSnippet = window.AppConfig.escenarios_presets[escenario]?.errores.includes('snippet_doble');
+    // Preset + ?errores= (como en datalayer.js); si no está escenarios.js, solo el preset, como antes.
+    const isDoubleSnippet = (window.AppEscenarios && typeof window.AppEscenarios.getErrores === 'function')
+        ? window.AppEscenarios.getErrores().includes('snippet_doble')
+        : window.AppConfig.escenarios_presets[escenario]?.errores.includes('snippet_doble');
     if (window.__gtm_loader_fired && !isDoubleSnippet) return;
     window.__gtm_loader_fired = true;
     const auth = urlParams.get('gtm_auth'), preview = urlParams.get('gtm_preview'), cookiesWin = urlParams.get('gtm_cookies_win');

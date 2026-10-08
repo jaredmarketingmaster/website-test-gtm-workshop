@@ -6,7 +6,13 @@
         if (esc.toLowerCase() === 'ninguno') { sessionStorage.removeItem('practica_escenario'); sessionStorage.removeItem('practica_errores_custom'); sessionStorage.removeItem('practica_ga4'); sessionStorage.removeItem('practica_pixel'); }
         else { sessionStorage.setItem('practica_escenario', esc); }
     }
-    if (urlParams.has('errores')) sessionStorage.setItem('practica_errores_custom', urlParams.get('errores'));
+    if (urlParams.has('errores')) {
+        sessionStorage.setItem('practica_errores_custom', urlParams.get('errores'));
+        // Un nombre mal escrito no rompe nada (simplemente no activa ningún error), pero se avisa para que no pase inadvertido.
+        const validos = window.AppConfig.errores_validos || [];
+        const desconocidos = urlParams.get('errores').split(',').filter(e => e && !validos.includes(e));
+        if (desconocidos.length) console.warn(`Café Laboratorio: ?errores= trae nombres que no existen: ${desconocidos.join(', ')}. Los válidos son: ${validos.join(', ')}.`);
+    }
     if (urlParams.has('user_data')) {
         if (urlParams.get('user_data') === '1') sessionStorage.setItem('practica_user_data', '1');
         else sessionStorage.removeItem('practica_user_data');

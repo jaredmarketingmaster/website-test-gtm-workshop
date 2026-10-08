@@ -34,5 +34,11 @@ window.AppConfig = {
     'm7': { errores: ['sin_limpiar_ecommerce', 'transaction_id_repetido'] },
     'r2': { errores: ['ga4_duplicado', 'valor_texto', 'cross_domain_js'] },
     'x9': { errores: ['datalayer_reset'] }
-  }
+  },
+  // Todos los nombres de error que entiende el código, para avisar si ?errores= trae uno mal escrito.
+  // Son 13: los 3 que ya funcionaban sueltos, los 5 que nunca se activaban y los 5 que antes solo venían en los presets.
+  errores_validos: [
+    'ga4_duplicado', 'pixel_duplicado', 'datalayer_reset', 'clave_mayuscula', 'moneda_minuscula', 'push_tardio', 'recarga_gracias', 'snippet_doble',
+    'valor_texto', 'doble_envio', 'sin_limpiar_ecommerce', 'transaction_id_repetido', 'cross_domain_js'
+  ]
 };
