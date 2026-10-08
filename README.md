@@ -1,6 +1,34 @@
 # website-test-gtm-workshop
 website de prueba para el workshop de GTM - 7/10/2026
 
+**Café Laboratorio** es una tienda de café ficticia para practicar Google Tag Manager. Tiene catálogo, carrito, checkout, pasarela de pago, formularios, banner de cookies y un Panel de Práctica que muestra el `dataLayer` en vivo. Cada alumno lo abre con su propio contenedor (`?gtm=GTM-XXXXXXX`) y puede activar errores de tracking a propósito para aprender a detectarlos.
+
+- Sitio publicado: https://jaredmarketingmaster.github.io/website-test-gtm-workshop/
+- Es HTML, CSS y JavaScript sin dependencias ni proceso de build.
+- Detalle técnico (páginas, eventos, parámetros de URL, escenarios de error, verificación): [`DESARROLLO.md`](DESARROLLO.md).
+
+## Levantarlo en tu computadora
+
+Necesitás Node.js (no hace falta Python). Desde la carpeta del repositorio:
+
+```bash
+npx http-server . -p 8000 -c-1 -a 127.0.0.1
+```
+
+Después abrí `http://localhost:8000`.
+
+- **`-a 127.0.0.1`**: el servidor solo acepta conexiones de tu propia computadora. Sin esta opción, `http-server` acepta conexiones de toda tu red y, como sirve la raíz del repositorio, también entrega la carpeta `.git`.
+- **`-c-1`**: desactiva la caché, así ves los cambios al recargar.
+- **No uses `npx serve`**: al redirigir `/…/index.html` descarta los parámetros de la URL (`?gtm=`, `?id=`, `?consent=`…), así que el sitio te manda a `/empezar/` y la ficha de producto queda vacía.
+
+## Publicarlo en GitHub Pages
+
+El sitio se publica desde la raíz de la rama `main`:
+
+1. En el repositorio, entrá a **Settings → Pages**.
+2. En la fuente de publicación, elegí **Deploy from a branch**, la rama **`main`** y la carpeta **`/ (root)`**, y guardá.
+3. Cada push a `main` vuelve a publicar el sitio. La URL queda con la subruta del repositorio (`/website-test-gtm-workshop/`); todas las rutas internas son relativas, así que funcionan igual.
+
 ## Segundo dominio para la clase 3 (cross-domain)
 
 En la clase 3, la pasarela de pago tiene que estar en otro dominio. El sitio ya está preparado: solo hay que publicarlo dos veces y completar una línea.
