@@ -1,0 +1,24 @@
+<!DOCTYPE html><html lang="es-AR"><head><meta charset="UTF-8"><meta name="robots" content="noindex, nofollow"><title>Detalle de Producto - Café Laboratorio</title>
+    <script src="../assets/js/config.js"></script><script src="../assets/js/escenarios.js"></script><script src="../assets/js/consent.js"></script>
+    <script>window.dataLayer=window.dataLayer||[];window.dataLayer.push({page_type:'producto'});</script><script src="../assets/js/datalayer.js"></script><script src="../assets/js/carrito.js"></script><script src="../assets/js/gtm-loader.js"></script><link rel="stylesheet" href="../assets/css/styles.css"></head>
+<body><header class="site-header"><a href="../index.html" class="logo">Café Laboratorio</a><nav class="main-nav"><a href="../carrito/index.html" style="color:var(--color-primario);">Carrito (<span id="cart-count">0</span>)</a></nav></header>
+    <main class="container">
+        <div id="detalle-producto" style="display:none; background:#fff; padding:30px; border-radius:8px; border:1px solid #ccc;">
+            <div id="cat-prod" style="color:#666;"></div><h1 id="nom-prod"></h1><div id="precio-prod" style="font-size:32px; color:var(--color-primario); font-weight:bold;"></div>
+            <div style="margin-top:20px;"><input type="number" id="cantidad" value="1" min="1" max="10" style="width:70px;"> <button id="btn-agregar" class="btn-primario" data-track="add-to-cart">Agregar al Carrito</button></div>
+        </div></main>
+    <script src="../assets/js/ui.js"></script><script src="../assets/js/panel.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => { window.AppCarrito.actualizarContadorUI();
+            const id = new URLSearchParams(window.location.search).get('id'); const producto = window.AppConfig.productos.find(p => p.item_id === id);
+            if (!producto) return;
+            document.getElementById('detalle-producto').style.display = 'block'; document.getElementById('cat-prod').textContent = producto.item_category; document.getElementById('nom-prod').textContent = producto.item_name;
+            const precioDec = producto.precio_centavos / 100; document.getElementById('precio-prod').textContent = window.AppCarrito.formatearMoneda(precioDec);
+            const ga4Item = { item_id: producto.item_id, item_name: producto.item_name, item_brand: producto.item_brand, item_category: producto.item_category, price: precioDec };
+            window.AppTracking.viewItem(window.AppConfig.tienda.moneda, precioDec, [ga4Item]);
+            document.getElementById('btn-agregar').addEventListener('click', () => {
+                const cant = parseInt(document.getElementById('cantidad').value, 10); window.AppCarrito.agregar(producto.item_id, cant, producto.item_variant); window.AppCarrito.actualizarContadorUI();
+                window.AppTracking.addToCart(window.AppConfig.tienda.moneda, precioDec * cant, [{ ...ga4Item, quantity: cant }]); alert("Agregado al carrito");
+            });
+        });
+    </script></body></html>

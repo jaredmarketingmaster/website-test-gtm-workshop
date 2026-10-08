@@ -1,0 +1,12 @@
+<!DOCTYPE html><html lang="es-AR"><head><meta charset="UTF-8"><meta name="robots" content="noindex, nofollow"><title>SPA - Café Laboratorio</title>
+    <script src="../assets/js/config.js"></script><script src="../assets/js/escenarios.js"></script><script src="../assets/js/consent.js"></script>
+    <script>window.dataLayer=window.dataLayer||[];window.dataLayer.push({page_type:'app'});</script><script src="../assets/js/gtm-loader.js"></script><link rel="stylesheet" href="../assets/css/styles.css"></head>
+<body><header class="site-header"><a href="../index.html" class="logo">Café Laboratorio</a></header>
+    <main class="container"><h1>Mini App (History API)</h1><div id="pantalla" style="padding:20px;background:#fff;border:1px solid #ccc;"></div><button onclick="goTo(2)" class="btn-primario">Paso 2</button> <button onclick="goTo(3)" class="btn-primario">Paso 3</button></main>
+    <script src="../assets/js/ui.js"></script><script src="../assets/js/panel.js"></script>
+    <script>
+        function render(s) { document.getElementById('pantalla').textContent = `Estás en el paso ${s}`; document.title = `Paso ${s}`; }
+        function goTo(s) { history.pushState({paso: s}, `Paso ${s}`, `?paso=${s}`); render(s); }
+        window.addEventListener('popstate', (e) => { render((e.state && e.state.paso) ? e.state.paso : 1); });
+        document.addEventListener('DOMContentLoaded', () => { render(new URLSearchParams(window.location.search).get('paso') || 1); });
+    </script></body></html>

@@ -1,0 +1,11 @@
+<!DOCTYPE html><html lang="es-AR"><head><meta charset="UTF-8"><meta name="robots" content="noindex, nofollow"><title>Contacto - Café Laboratorio</title>
+    <script src="../assets/js/config.js"></script><script src="../assets/js/escenarios.js"></script><script src="../assets/js/consent.js"></script>
+    <script>window.dataLayer=window.dataLayer||[];window.dataLayer.push({page_type:'contacto'});</script><script src="../assets/js/datalayer.js"></script><script src="../assets/js/gtm-loader.js"></script><link rel="stylesheet" href="../assets/css/styles.css"></head>
+<body><header class="site-header"><a href="../index.html" class="logo">Café Laboratorio</a></header>
+    <main class="container"><h1>Contactanos</h1>
+        <div style="background:#fff;padding:20px;border-radius:8px;margin-bottom:20px;"><h2>Formulario Clásico</h2><form action="../gracias-contacto/index.html" method="GET"><input type="hidden" name="form_id" value="contacto_clasico"><input type="text" required placeholder="Nombre Ficticio" style="margin-bottom:10px;"><button type="submit" class="btn-primario">Enviar</button></form></div>
+        <div style="background:#fff;padding:20px;border-radius:8px;margin-bottom:20px;"><h2>Formulario AJAX (Data Layer)</h2><form id="form-ajax-dl"><input type="text" required placeholder="Empresa" style="margin-bottom:10px;"><button type="submit" class="btn-primario">Solicitar Presupuesto</button></form><div id="msg-ajax" style="display:none; color:green; margin-top:10px;">Enviado ok.</div></div>
+        <div style="background:#fff;padding:20px;border-radius:8px;"><h2>Agenda (Iframe)</h2><iframe src="../agenda-widget/index.html" style="width:100%; height:200px; border:1px solid #ccc;"></iframe></div>
+    </main>
+    <script src="../assets/js/ui.js"></script><script src="../assets/js/panel.js"></script>
+    <script>document.getElementById('form-ajax-dl').addEventListener('submit', (e) => { e.preventDefault(); document.getElementById('msg-ajax').style.display='block'; window.AppTracking.formSuccess('presupuesto', 'Pedí tu presupuesto', 'presupuesto'); });</script></body></html>

@@ -1,0 +1,35 @@
+
+:root { --color-primario: #D35400; --color-primario-hover: #A04000; --color-fondo: #FAF7F2; --color-texto: #333333; --color-borde: #E0D4C8; --color-alerta: #C0392B; --color-exito: #27AE60; --fuente-base: system-ui, sans-serif; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--fuente-base); background-color: var(--color-fondo); color: var(--color-texto); line-height: 1.6; padding-top: 40px; }
+.banner-practica { position: fixed; top: 0; left: 0; width: 100%; background-color: #F1C40F; color: #000; text-align: center; font-size: 13px; font-weight: bold; padding: 8px; z-index: 9000; }
+.site-header { background-color: #fff; border-bottom: 1px solid var(--color-borde); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+.logo { font-size: 24px; font-weight: bold; color: var(--color-primario); text-decoration: none; }
+.main-nav a { margin-left: 20px; text-decoration: none; color: var(--color-texto); font-weight: 500; }
+.main-nav a:hover { color: var(--color-primario); }
+.container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
+h1, h2, h3 { margin-bottom: 20px; }
+p { margin-bottom: 15px; }
+.btn-primario, .cta-main { display: inline-block; background-color: var(--color-primario); color: #fff; padding: 10px 20px; border: none; border-radius: 4px; text-decoration: none; cursor: pointer; font-size: 16px; transition: background 0.2s; }
+.btn-primario:hover, .cta-main:hover { background-color: var(--color-primario-hover); }
+.btn-icono svg { vertical-align: middle; margin-right: 8px; pointer-events: auto; }
+.form-group { margin-bottom: 15px; }
+label { display: block; font-weight: bold; margin-bottom: 5px; }
+input[type="text"], input[type="email"], input[type="number"], input[type="datetime-local"], select, textarea { width: 100%; padding: 10px; border: 1px solid var(--color-borde); border-radius: 4px; font-family: inherit; }
+.btn-flotante-wa { position: fixed; bottom: 20px; right: 20px; background-color: #25D366; color: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 8000; transition: transform 0.2s; }
+.btn-flotante-wa:hover { transform: scale(1.1); }
+.btn-flotante-wa svg { width: 30px; fill: white; }
+#practica-panel-btn { position: fixed; bottom: 20px; left: 20px; background: #333; color: #fff; padding: 10px 15px; border-radius: 4px; cursor: pointer; z-index: 9999; font-size: 13px; font-weight: bold; }
+#practica-panel { position: fixed; bottom: 20px; left: 20px; width: 380px; max-height: 80vh; background: #fff; border: 1px solid #ccc; box-shadow: 0 5px 15px rgba(0,0,0,0.2); border-radius: 8px; z-index: 10000; display: flex; flex-direction: column; }
+.panel-header { background: #333; color: #fff; padding: 10px 15px; border-radius: 8px 8px 0 0; display: flex; justify-content: space-between; align-items: center; }
+.panel-header button { background: none; border: none; color: #fff; font-size: 20px; cursor: pointer; }
+.panel-body { padding: 15px; overflow-y: auto; font-size: 13px; }
+.panel-section { border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 10px; }
+.panel-btn { background: #eee; border: 1px solid #ccc; padding: 5px 10px; cursor: pointer; border-radius: 3px; margin: 3px 0; display: inline-block; }
+.panel-btn-danger { background: #fee; border-color: #fcc; color: #c00; }
+.dl-item { background: #f9f9f9; border: 1px solid #ddd; margin-top: 5px; border-radius: 3px; }
+.dl-item-header { background: #eee; padding: 3px 8px; font-weight: bold; border-bottom: 1px solid #ddd; }
+.dl-item pre { padding: 8px; margin: 0; overflow-x: auto; font-size: 11px; white-space: pre-wrap; }
+.dl-item-gtm { opacity: 0.7; }
+.panel-error { color: #D35400; background: #FDEDEC; padding: 8px; border-radius: 4px; margin-top: 5px; }
+@media (max-width: 600px) { .site-header { flex-direction: column; gap: 15px; } #practica-panel { width: 90%; left: 5%; bottom: 10px; } }

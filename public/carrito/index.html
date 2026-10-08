@@ -1,0 +1,17 @@
+<!DOCTYPE html><html lang="es-AR"><head><meta charset="UTF-8"><meta name="robots" content="noindex, nofollow"><title>Carrito - Café Laboratorio</title>
+    <script src="../assets/js/config.js"></script><script src="../assets/js/escenarios.js"></script><script src="../assets/js/consent.js"></script>
+    <script>window.dataLayer=window.dataLayer||[];window.dataLayer.push({page_type:'carrito'});</script><script src="../assets/js/datalayer.js"></script><script src="../assets/js/carrito.js"></script><script src="../assets/js/gtm-loader.js"></script><link rel="stylesheet" href="../assets/css/styles.css"></head>
+<body><header class="site-header"><a href="../index.html" class="logo">Café Laboratorio</a></header>
+    <main class="container"><h1>Tu Carrito</h1><div id="carrito-lleno"><table style="width:100%;text-align:left;"><tbody id="lista-items"></tbody></table><div style="margin-top:20px;text-align:right;">Total: <strong id="subtotal"></strong><br><br><a href="../checkout/index.html" class="btn-primario">Iniciar Compra</a></div></div></main>
+    <script src="../assets/js/ui.js"></script><script src="../assets/js/panel.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            function render() {
+                const d = window.AppCarrito.obtener(); const tbody = document.getElementById('lista-items'); tbody.innerHTML = '';
+                d.items.forEach(item => { const tr = document.createElement('tr'); tr.innerHTML = `<td>${item.item_name}</td><td>${item.quantity}</td><td><button class="btn-remover panel-btn" data-id="${item.item_id}">Quitar</button></td>`; tbody.appendChild(tr); });
+                document.getElementById('subtotal').textContent = window.AppCarrito.formatearMoneda(d.value);
+            }
+            document.getElementById('lista-items').addEventListener('click', (e) => { if (e.target.classList.contains('btn-remover')) { const id = e.target.getAttribute('data-id'); const itemRem = window.AppCarrito.obtener().items.find(i => i.item_id===id); if(itemRem) window.AppTracking.removeFromCart(window.AppCarrito.obtener().currency, itemRem.price*itemRem.quantity, [itemRem]); window.AppCarrito.quitar(id); render(); } });
+            const datos = window.AppCarrito.obtener(); if (datos.items.length > 0) window.AppTracking.viewCart(datos.currency, datos.value, datos.items); render();
+        });
+    </script></body></html>
