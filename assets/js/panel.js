@@ -33,5 +33,16 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btn-clear-dl-view').addEventListener('click', () => { dlContainer.innerHTML = ''; dlLength = window.dataLayer ? window.dataLayer.length : 0; });
     document.getElementById('btn-sim-gclid').addEventListener('click', () => { const url = new URL(window.location.href); url.searchParams.set('gclid', 'Cj0KCQj_prueba_didactica_123'); window.location.href = url.toString(); });
     document.getElementById('btn-sim-fbclid').addEventListener('click', () => { const url = new URL(window.location.href); url.searchParams.set('fbclid', 'IwAR2_prueba_didactica_456'); window.location.href = url.toString(); });
-    document.getElementById('btn-reset-session').addEventListener('click', () => { if(confirm("¿Borrar cookies y carrito? (Conserva tu ID)")) { localStorage.removeItem('practica_carrito'); sessionStorage.clear(); const cookies = document.cookie.split(";"); for (let i = 0; i < cookies.length; i++) { const cookie = cookies[i]; const eqPos = cookie.indexOf("="); const name = eqPos > -1 ? cookie.substr(0, eqPos).trim() : cookie.trim(); document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/"; } window.location.reload(); } });
+    // Confirmación dentro del propio panel en lugar de confirm(), que bloquea la página y la Vista previa de GTM:
+    // el primer clic cambia el texto a «¿Seguro? Confirmar» durante 4 s; un segundo clic dentro de ese plazo reinicia.
+    let resetPendiente = null;
+    document.getElementById('btn-reset-session').addEventListener('click', function () {
+        if (!resetPendiente) {
+            const btnReset = this, textoReposo = btnReset.textContent;
+            btnReset.textContent = '¿Seguro? Confirmar';
+            resetPendiente = setTimeout(() => { resetPendiente = null; btnReset.textContent = textoReposo; }, 4000);
+            return;
+        }
+        clearTimeout(resetPendiente);
+        { localStorage.removeItem('practica_carrito'); sessionStorage.clear(); const cookies = document.cookie.split(";"); for (let i = 0; i < cookies.length; i++) { const cookie = cookies[i]; const eqPos = cookie.indexOf("="); const name = eqPos > -1 ? cookie.substr(0, eqPos).trim() : cookie.trim(); document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/"; } window.location.reload(); } });
 });
