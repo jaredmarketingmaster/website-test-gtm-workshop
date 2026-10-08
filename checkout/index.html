@@ -21,6 +21,9 @@
                 const url = new URL(baseURL, window.location.href); url.searchParams.set('tipo', tipo);
                 const gtmId = localStorage.getItem('practica_gtm_id'); if (gtmId) url.searchParams.set('gtm', gtmId);
                 const esc = sessionStorage.getItem('practica_escenario'); if (esc) url.searchParams.set('escenario', esc);
+                // El resto de la práctica también viaja, para que el dominio B se comporte igual que el A.
+                const extras = { errores: 'practica_errores_custom', ga4: 'practica_ga4', pixel: 'practica_pixel', consent: 'practica_consent_mode' };
+                Object.keys(extras).forEach(param => { const valor = sessionStorage.getItem(extras[param]); if (valor) url.searchParams.set(param, valor); });
                 url.searchParams.set('d', encodeURIComponent(btoa(JSON.stringify({curr: datos.currency, val: datos.value, items: datos.items.length}))));
                 document.getElementById('link-finalizar').href = url.toString();
             }
