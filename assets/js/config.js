@@ -15,6 +15,9 @@ window.AppConfig = {
     checkout_url: '',
     gtm_whitelist: ['https://www.googletagmanager.com']
   },
+  // Nombre del evento que el banner empuja al dataLayer cuando cambia el consentimiento (los tres modos de ?consent=).
+  // Es el que usan los manuales y las diapositivas; si se cambia, actualizar también el texto de /como-usar/.
+  consent: { evento: 'consent_update' },
   productos: [
     { item_id: 'CL-001', item_name: 'Colombia Finca El Paraíso', item_brand: 'Café Laboratorio', item_category: 'Café en grano', precio_centavos: 1850000, imagen_svg: 'icono-cafe-grano' },
     { item_id: 'CL-002', item_name: 'Etiopía Yirgacheffe', item_brand: 'Café Laboratorio', item_category: 'Café en grano', precio_centavos: 2100000, imagen_svg: 'icono-cafe-grano' },
